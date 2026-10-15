@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clarke Pudpud | Full-Stack Developer & Live Broadcast Tech Specialist</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#020617',
+                            card: '#0F172A',
+                            accent: '#38BDF8',
+                            cyan: '#06B6D4',
+                            glow: '#0EA5E9',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Glassmorphism styles */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            background: rgba(15, 23, 42, 0.85);
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.15);
+        }
+        .glass-nav {
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #38BDF8 0%, #818CF8 50%, #C084FC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #38BDF8 0%, #22D3EE 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38BDF8;
+        }
+        /* AC virtual assistant */
+        .ac-chat-window {
+            width: min(24rem, calc(100vw - 2rem));
+            height: min(34rem, calc(100vh - 7rem));
+        }
+        .ac-chat-messages {
+            scrollbar-width: thin;
+            scrollbar-color: #334155 transparent;
+        }
+        .ac-chat-messages::-webkit-scrollbar {
+            width: 5px;
+        }
+        .ac-chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .ac-chat-messages::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 999px;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-200 antialiased font-sans selection:bg-brand-accent selection:text-brand-dark overflow-x-hidden">
+
+    <!-- Background Glow Decor -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse-slow"></div>
+    <div class="fixed bottom-0 right-1/4 w-[30rem] h-[30rem] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center text-white font-outfit font-bold text-xl shadow-lg shadow-sky-500/20 group-hover:scale-105 transition-transform">
+                        CL
+                    </div>
+                    <span class="font-outfit font-bold text-lg tracking-wider text-white">CLARKE PUDPUD<span class="text-brand-accent">.DEV</span></span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-300">
+                    <a href="#about" class="hover:text-brand-accent transition-colors">About</a>
+                    <a href="#skills" class="hover:text-brand-accent transition-colors">Skills</a>
+                    <a href="#projects" class="hover:text-brand-accent transition-colors">Projects</a>
+                    <a href="#services" class="hover:text-brand-accent transition-colors">Services</a>
+                    <a href="#contact" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold shadow-md shadow-sky-500/20 hover:shadow-sky-500/40 hover:scale-[1.02] transition-all">
+                        Hire Me
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800/60 focus:outline-none" aria-label="Toggle menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800/50">About</a>
+            <a href="#skills" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800/50">Skills</a>
+            <a href="#projects" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800/50">Projects</a>
+            <a href="#services" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800/50">Services</a>
+            <a href="#contact" class="mobile-nav-link block px-3 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold text-center mt-2 shadow-md">Contact Me</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen pt-28 pb-16 flex items-center relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Content -->
+                <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-sky-500/30 text-sky-400 text-xs sm:text-sm font-medium">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        Available for Freelance & Broadcast Tech Consultations
+                    </div>
+
+                    <div class="space-y-4">
+                        <p class="text-sky-400 font-semibold tracking-wider uppercase text-sm sm:text-base">Mabuhay! Welcome to my space</p>
+                        <h1 class="text-4xl sm:text-6xl font-extrabold font-outfit tracking-tight text-white leading-tight">
+                            Hi, I'm <span class="text-gradient">Clarke Pudpud</span>
+                        </h1>
+                        <h2 class="text-lg sm:text-2xl font-medium text-slate-300 leading-snug">
+                            Full-Stack Web Developer <span class="text-sky-400">|</span> System Developer <span class="text-sky-400">|</span> Live Technical Broadcast Operator
+                        </h2>
+                    </div>
+
+                    <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Passionate about building scalable web applications, engineering robust backend software systems, and orchestrating high-stakes live video/audio productions with zero room for failure.
+                    </p>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold text-base shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group">
+                            <span>View Work</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-slate-200 hover:text-white hover:border-sky-500/50 font-semibold text-base hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="mail" class="w-5 h-5 text-sky-400"></i>
+                            <span>Contact Me</span>
+                        </a>
+                    </div>
+
+                    <!-- Quick Location & Social Badges -->
+                    <div class="pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs sm:text-sm text-slate-400">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-sky-400"></i>
+                            <span>Davao City, Philippines</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="code" class="w-4 h-4 text-sky-400"></i>
+                            <span>BS Information Systems</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="radio" class="w-4 h-4 text-sky-400"></i>
+                            <span>vMix & NDI Specialist</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual Element -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <!-- Glow behind card -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-sky-500 to-indigo-600 rounded-3xl blur-2xl opacity-30 animate-pulse-slow"></div>
+                        
+                        <!-- Floating Tech Deck Card -->
+                        <div class="relative glass-card p-6 sm:p-8 rounded-3xl border border-slate-700/50 shadow-2xl space-y-6">
+                            <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+                                </div>
+                                <span class="text-xs font-mono text-slate-400">clarke_status.sys</span>
+                            </div>
+
+                            <!-- Terminal-like Stats -->
+                            <div class="space-y-4 font-mono text-xs sm:text-sm">
+                                <div class="bg-slate-950/80 p-3 rounded-lg border border-slate-800/80">
+                                    <span class="text-sky-400">&gt; primary_skills:</span>
+                                    <div class="text-slate-300 mt-1 pl-4">["Full-Stack Web", "Desktop Systems", "Live Technical Directing"]</div>
+                                </div>
+                                <div class="bg-slate-950/80 p-3 rounded-lg border border-slate-800/80">
+                                    <span class="text-emerald-400">&gt; current_focus:</span>
+                                    <div class="text-slate-300 mt-1 pl-4">"Building ACTech Platform & Broadcast Workflows"</div>
+                                </div>
+                                <div class="bg-slate-950/80 p-3 rounded-lg border border-slate-800/80">
+                                    <span class="text-purple-400">&gt; live_stream_uptime:</span>
+                                    <div class="text-slate-300 mt-1 pl-4">"99.9% Zero Frame Drop Guarantee"</div>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Badges -->
+                            <div class="grid grid-cols-3 gap-2 pt-2 text-center text-xs">
+                                <div class="p-2.5 rounded-xl bg-slate-800/50 border border-slate-700/40">
+                                    <div class="font-bold text-sky-400 text-lg">100%</div>
+                                    <div class="text-slate-400 text-[10px] uppercase">Clean Code</div>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-slate-800/50 border border-slate-700/40">
+                                    <div class="font-bold text-indigo-400 text-lg">Multi</div>
+                                    <div class="text-slate-400 text-[10px] uppercase">Cam Setup</div>
+                                </div>
+                                <div class="p-2.5 rounded-xl bg-slate-800/50 border border-slate-700/40">
+                                    <div class="font-bold text-emerald-400 text-lg">Fast</div>
+                                    <div class="text-slate-400 text-[10px] uppercase">REST APIs</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-24 relative bg-slate-950/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="text-xs font-bold tracking-widest text-sky-400 uppercase">Behind The Screens</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-outfit text-white">About Me</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-sky-500 to-indigo-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <!-- Bio Cards -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-4 border border-slate-800">
+                        <div class="flex items-center gap-3 text-sky-400 font-bold font-outfit text-xl">
+                            <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+                            <h4>BS Information Systems Student & Freelance Specialist</h4>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed text-sm sm:text-base">
+                            Based in <strong class="text-white">Davao City, Philippines</strong>, I bridge the gap between complex software architecture and real-time live media streaming. As a Bachelor of Science in Information Systems student, I blend theoretical system analysis with hands-on development and media engineering.
+                        </p>
+                        <p class="text-slate-300 leading-relaxed text-sm sm:text-base">
+                            Whether I am architecting databases, crafting modern web application user interfaces, or operating multi-camera live broadcast setups using NDI protocols and digital audio mixers, my goal remains constant: <span class="text-sky-400 font-semibold">Reliability, Performance, and Precision.</span>
+                        </p>
+                    </div>
+
+                    <!-- Core Pillars -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card p-5 rounded-xl flex items-start gap-4">
+                            <div class="p-3 rounded-lg bg-sky-500/10 text-sky-400 shrink-0">
+                                <i data-lucide="terminal" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-semibold text-sm">Clean & Scalable Code</h5>
+                                <p class="text-slate-400 text-xs mt-1">Structured backend logic and responsive frontend components built for sustainability.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-xl flex items-start gap-4">
+                            <div class="p-3 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0">
+                                <i data-lucide="video" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-semibold text-sm">Broadcast Systems</h5>
+                                <p class="text-slate-400 text-xs mt-1">Expertise in vMix, OBS, NDI matrix routing, and digital audio signal processing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Highlight Cards Grid -->
+                <div class="lg:col-span-5 grid grid-cols-1 gap-4">
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-l-sky-500 space-y-3">
+                        <div class="text-sky-400 font-mono text-xs font-bold uppercase">Location & Workflow</div>
+                        <h4 class="text-white font-bold text-lg">Davao City & Remote Setup</h4>
+                        <p class="text-slate-400 text-sm">Equipped with high-performance workstations for software compilation, live video rendering, and multi-track audio routing.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-l-indigo-500 space-y-3">
+                        <div class="text-indigo-400 font-mono text-xs font-bold uppercase">Philosophy</div>
+                        <h4 class="text-white font-bold text-lg">Flawless High-Stakes Execution</h4>
+                        <p class="text-slate-400 text-sm">In live broadcasting and critical systems development, there are no redos. Every system is built with fail-safes and redundancy in mind.</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-l-emerald-500 space-y-3">
+                        <div class="text-emerald-400 font-mono text-xs font-bold uppercase">Current Enterprise</div>
+                        <h4 class="text-white font-bold text-lg">ACTech Platform Lead</h4>
+                        <p class="text-slate-400 text-sm">Spearheading digital solutions and technical broadcast operations for various local events and organizations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills & Expertise Section -->
+    <section id="skills" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="text-xs font-bold tracking-widest text-sky-400 uppercase">Technical Proficiency</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-outfit text-white">Skills & Expertise</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-sky-500 to-indigo-500 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Skills Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Category 1: Web Development -->
+                <div class="glass-card glass-card-hover p-6 sm:p-8 rounded-3xl space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+                            <i data-lucide="layout" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold font-outfit text-white">Web Development</h4>
+                            <span class="text-xs text-slate-400">Frontend & Dynamic UI</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-sky-500/40 transition-colors">HTML5 / CSS3</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-sky-500/40 transition-colors">JavaScript (ES6+)</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-sky-500/40 transition-colors">PHP</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-sky-500/40 transition-colors">React.js</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-sky-500/40 transition-colors">Next.js</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-sky-500/40 transition-colors">Tailwind CSS</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-sky-500/40 transition-colors">Bootstrap</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800/80 text-xs text-slate-400 leading-relaxed">
+                        Crafting responsive, high-performance web interfaces with modern frameworks, tailored for user experience and fast rendering.
+                    </div>
+                </div>
+
+                <!-- Category 2: Backend & Systems -->
+                <div class="glass-card glass-card-hover p-6 sm:p-8 rounded-3xl space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                            <i data-lucide="server" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold font-outfit text-white">Backend & Systems</h4>
+                            <span class="text-xs text-slate-400">Architecture & Databases</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-indigo-500/40 transition-colors">Node.js</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-indigo-500/40 transition-colors">Express.js</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-indigo-500/40 transition-colors">Java Swing</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-indigo-500/40 transition-colors">C# (.NET)</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-indigo-500/40 transition-colors">REST APIs</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-indigo-500/40 transition-colors">MySQL / Relational DB</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-indigo-500/40 transition-colors">Git & GitHub</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800/80 text-xs text-slate-400 leading-relaxed">
+                        Architecting robust software logic, database schemas, cash management desktop tools, and reliable API endpoints.
+                    </div>
+                </div>
+
+                <!-- Category 3: Broadcast & Media Production -->
+                <div class="glass-card glass-card-hover p-6 sm:p-8 rounded-3xl space-y-6">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                            <i data-lucide="radio" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold font-outfit text-white">Live Broadcast & Media</h4>
+                            <span class="text-xs text-slate-400">Technical Directing & Audio</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-cyan-500/40 transition-colors">vMix Production</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-cyan-500/40 transition-colors">OBS Studio</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-cyan-500/40 transition-colors">NDI Networking</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-cyan-500/40 transition-colors">Multi-Cam Switchers</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-cyan-500/40 transition-colors">Digital Audio Mixers</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-cyan-500/40 transition-colors">FL Studio</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-800/80 text-slate-200 text-xs font-medium border border-slate-700/50 hover:border-cyan-500/40 transition-colors">Adobe Premiere Pro</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800/80 text-xs text-slate-400 leading-relaxed">
+                        Operating complex live broadcast infrastructure, lower thirds graphics insertion, NDI video matrix, and clear audio routing.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section id="projects" class="py-24 relative bg-slate-950/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="text-xs font-bold tracking-widest text-sky-400 uppercase">Portfolio Highlights</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-outfit text-white">Featured Projects</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-sky-500 to-indigo-500 mx-auto rounded-full"></div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Project 1: ACTech -->
+                <div class="glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col group border border-slate-800">
+                    <div class="h-48 bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 relative overflow-hidden flex items-center justify-center p-6">
+                        <!-- Abstract Visual Graphic -->
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(56,189,248,0.2),transparent)]"></div>
+                        <i data-lucide="video" class="w-16 h-16 text-sky-400 group-hover:scale-110 transition-transform duration-300"></i>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-sky-500/20 border border-sky-500/30 text-sky-300 text-xs font-semibold">
+                            Production Platform
+                        </div>
+                    </div>
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-6">
+                        <div class="space-y-3">
+                            <h4 class="text-xl font-bold font-outfit text-white group-hover:text-sky-400 transition-colors">ACTech Platform & Production</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                A modern brand web identity and digital ecosystem designed for technology consultation, event coverage, and live technical production management.
+                            </p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-sky-300 text-xs font-mono">React</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-sky-300 text-xs font-mono">Tailwind</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-sky-300 text-xs font-mono">vMix Suite</span>
+                            </div>
+                            <button onclick="openModal('actech')" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2">
+                                <span>View Details</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: AC (Artificial Clone) -->
+                <div class="glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col group border border-slate-800">
+                    <div class="h-48 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(99,102,241,0.2),transparent)]"></div>
+                        <i data-lucide="bot" class="w-16 h-16 text-indigo-400 group-hover:scale-110 transition-transform duration-300"></i>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-xs font-semibold">
+                            AI Integration
+                        </div>
+                    </div>
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-6">
+                        <div class="space-y-3">
+                            <h4 class="text-xl font-bold font-outfit text-white group-hover:text-indigo-400 transition-colors">AC (Artificial Clone)</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                An intelligent AI assistant powered by external API integration, custom prompt engineering, and deployed seamlessly on Vercel environment.
+                            </p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 text-xs font-mono">AI & API Developer</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 text-xs font-mono">API & Cloud Integrator</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-indigo-300 text-xs font-mono">Full-Stack API Engineer</span>
+                            </div>
+                            <button onclick="openModal('aquajo')" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2">
+                                <span>View Details</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: School & Academic Systems -->
+                <div class="glass-card glass-card-hover rounded-3xl overflow-hidden flex flex-col group border border-slate-800">
+                    <div class="h-48 bg-gradient-to-br from-slate-900 via-cyan-950 to-slate-900 relative overflow-hidden flex items-center justify-center p-6">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(6,182,212,0.2),transparent)]"></div>
+                        <i data-lucide="cpu" class="w-16 h-16 text-cyan-400 group-hover:scale-110 transition-transform duration-300"></i>
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-semibold">
+                            Academic & Systems
+                        </div>
+                    </div>
+                    <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between space-y-6">
+                        <div class="space-y-3">
+                            <h4 class="text-xl font-bold font-outfit text-white group-hover:text-cyan-400 transition-colors">School & Desktop Software Suite</h4>
+                            <p class="text-slate-400 text-sm leading-relaxed">
+                                Suite including Java Cashiering GUI app, responsive multi-page parallax portfolios, and Online Student Clearance workflows.
+                            </p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-cyan-300 text-xs font-mono">Java Swing</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-cyan-300 text-xs font-mono">MySQL</span>
+                                <span class="px-2.5 py-1 rounded-md bg-slate-800 text-cyan-300 text-xs font-mono">Parallax UI</span>
+                            </div>
+                            <button onclick="openModal('academic')" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-cyan-600 text-slate-200 hover:text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2">
+                                <span>View Details</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Offered Section -->
+    <section id="services" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="text-xs font-bold tracking-widest text-sky-400 uppercase">Solutions & Capabilities</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-outfit text-white">Services Offered</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-sky-500 to-indigo-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Service 1 -->
+                <div class="glass-card p-8 rounded-3xl space-y-6 relative group hover:border-sky-500/50 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/20 group-hover:scale-110 transition-transform">
+                        <i data-lucide="globe" class="w-7 h-7"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <h4 class="text-xl font-bold font-outfit text-white">Web App Development</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Full-stack web applications tailored to modern aesthetics and functional specs. Built using React, Next.js, JavaScript, and PHP backends.
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400"></i> Responsive UI Design</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400"></i> RESTful API Integration</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-sky-400"></i> Admin Dashboards & Databases</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-card p-8 rounded-3xl space-y-6 relative group hover:border-indigo-500/50 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform">
+                        <i data-lucide="monitor" class="w-7 h-7"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <h4 class="text-xl font-bold font-outfit text-white">Desktop & System Development</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Custom business software, cashiering solutions, and clearance management systems built with Java Swing, C# (.NET), and MySQL integration.
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-400"></i> Local & Server DB Connectors</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-400"></i> POS / Cashiering Logic</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-indigo-400"></i> Process Automation</li>
+                    </ul>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-card p-8 rounded-3xl space-y-6 relative group hover:border-cyan-500/50 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-cyan-500 to-teal-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20 group-hover:scale-110 transition-transform">
+                        <i data-lucide="radio" class="w-7 h-7"></i>
+                    </div>
+                    <div class="space-y-3">
+                        <h4 class="text-xl font-bold font-outfit text-white">Live Broadcast & Technical Support</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            End-to-end multi-camera live streaming execution for sports, school events, conferences, and virtual summits with zero frame drops.
+                        </p>
+                    </div>
+                    <ul class="space-y-2 text-xs text-slate-300">
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400"></i> vMix & NDI Setup</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400"></i> Digital Audio Mixer Routing</li>
+                        <li class="flex items-center gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-cyan-400"></i> Real-time Lower Thirds & Graphics</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative bg-slate-950/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <h2 class="text-xs font-bold tracking-widest text-sky-400 uppercase">Get In Touch</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold font-outfit text-white">Let's Build Something Great Together</h3>
+                <div class="w-16 h-1 bg-gradient-to-r from-sky-500 to-indigo-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Contact Info Card -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div class="glass-card p-8 rounded-3xl space-y-6 border border-slate-800">
+                        <h4 class="text-2xl font-bold font-outfit text-white">Contact Information</h4>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            Have a web project in mind, need a system analysis plan, or require broadcast technical direction for an upcoming event? Send a message and let's talk!
+                        </p>
+
+                        <div class="space-y-6 pt-2">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 shrink-0">
+                                    <i data-lucide="map-pin" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-slate-400 uppercase font-mono">Location</div>
+                                    <div class="text-white font-semibold text-sm">Davao City, Philippines</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
+                                    <i data-lucide="mail" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-slate-400 uppercase font-mono">Direct Email</div>
+                                    <div class="text-white font-semibold text-sm">clarkepudpud@gmail.com</div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
+                                    <i data-lucide="clock" class="w-6 h-6"></i>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-slate-400 uppercase font-mono">Availability</div>
+                                    <div class="text-white font-semibold text-sm">Open for Freelance & Broadcast Projects</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Social Badges -->
+                        <div class="pt-6 border-t border-slate-800 flex items-center gap-3">
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-slate-800/80 hover:bg-sky-500/20 hover:text-sky-400 text-slate-300 transition-colors" aria-label="GitHub">
+                                <i data-lucide="github" class="w-5 h-5"></i>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="p-3 rounded-xl bg-slate-800/80 hover:bg-sky-500/20 hover:text-sky-400 text-slate-300 transition-colors" aria-label="LinkedIn">
+                                <i data-lucide="linkedin" class="w-5 h-5"></i>
+                            </a>
+                            <a href="mailto:clarkepudpud@gmail.com" class="p-3 rounded-xl bg-slate-800/80 hover:bg-sky-500/20 hover:text-sky-400 text-slate-300 transition-colors" aria-label="Send Email">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Contact Form -->
+                <div class="lg:col-span-7">
+                    <div class="glass-card p-8 rounded-3xl border border-slate-800">
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label for="name" class="text-xs font-semibold uppercase text-slate-300 font-mono">Your Name</label>
+                                    <input type="text" id="name" required placeholder="Juan Dela Cruz" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-sm">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="email" class="text-xs font-semibold uppercase text-slate-300 font-mono">Your Email</label>
+                                    <input type="email" id="email" required placeholder="juan@example.com" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-sm">
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="subject" class="text-xs font-semibold uppercase text-slate-300 font-mono">Subject / Project Type</label>
+                                <select id="subject" class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-white focus:outline-none focus:border-sky-500 transition-colors text-sm">
+                                    <option value="Web Development">Web App Development</option>
+                                    <option value="System Architecture">System / Desktop Software</option>
+                                    <option value="Live Broadcast">Live Broadcast Technical Setup</option>
+                                    <option value="Other Consultation">Other Tech Consultation</option>
+                                </select>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label for="message" class="text-xs font-semibold uppercase text-slate-300 font-mono">Message</label>
+                                <textarea id="message" rows="5" required placeholder="Tell me about your project or event technical requirements..." class="w-full px-4 py-3 rounded-xl bg-slate-900/90 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-sm resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" id="submit-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-2">
+                                <span>Send Message</span>
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                            </button>
+
+                            <!-- Success Banner (Hidden by Default) -->
+                            <div id="form-success" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm text-center font-medium">
+                                <i data-lucide="check-circle" class="w-5 h-5 inline mr-2"></i>
+                                Thank you! Your message has been sent successfully. Clarke will get back to you soon.
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>  
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-slate-800/80 bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+            <div class="flex items-center gap-2">
+                <span class="font-outfit font-bold text-white">Clarke Pudpud</span>
+                <span>• BS Information Systems</span>
+            </div>
+            <div>
+                &copy; <span id="year"></span> Clarke Pudpud. All rights reserved. Davao City, PH.
+            </div>
+        </div>
+    </footer>
+
+    <!-- AC Floating AI Chatbot -->
+    <div class="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+        <section id="ac-chat-window" class="ac-chat-window hidden flex flex-col overflow-hidden rounded-3xl border border-sky-400/25 bg-slate-950/95 shadow-2xl shadow-sky-950/70 backdrop-blur-xl" role="dialog" aria-modal="false" aria-labelledby="ac-chat-title">
+            <header class="flex items-center justify-between border-b border-slate-800 bg-gradient-to-r from-sky-500/15 to-indigo-500/15 px-4 py-3.5">
+                <div class="flex items-center gap-3">
+                    <div class="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-400 to-indigo-600 font-outfit text-sm font-extrabold text-white shadow-lg shadow-sky-500/20">
+                        AC
+                        <span class="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-slate-950 bg-emerald-400"></span>
+                    </div>
+                    <div>
+                        <h2 id="ac-chat-title" class="font-outfit text-sm font-bold text-white">AC — Virtual Assistant</h2>
+                        <p class="text-[11px] text-emerald-400">Online · Ask about Clarke</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-1">
+                    <button id="ac-chat-clear" type="button" class="rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400" aria-label="Start a new chat" title="Start a new chat">
+                        <i data-lucide="rotate-ccw" class="h-4 w-4"></i>
+                    </button>
+                    <button id="ac-chat-close" type="button" class="rounded-lg p-2 text-slate-400 transition-colors hover:bg-slate-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-sky-400" aria-label="Close AC chat">
+                        <i data-lucide="x" class="h-4 w-4"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div id="ac-chat-messages" class="ac-chat-messages flex-1 space-y-3 overflow-y-auto px-4 py-4" aria-live="polite" aria-label="Chat messages">
+                <div class="flex items-end gap-2">
+                    <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-sky-500/20 text-[10px] font-bold text-sky-300">AC</div>
+                    <p class="max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-bl-md border border-slate-700/70 bg-slate-800/80 px-3 py-2.5 text-sm leading-relaxed text-slate-200">Hi! I'm AC, Clarke's virtual assistant. You can ask me about his web development, systems, broadcast work, or how to get in touch.</p>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 px-4 py-3">
+                <div id="ac-chat-suggestions" class="mb-3 flex gap-2 overflow-x-auto pb-1">
+                    <button type="button" data-ac-prompt="What services does Clarke offer?" class="shrink-0 rounded-full border border-slate-700 bg-slate-800/70 px-3 py-1.5 text-xs text-slate-300 transition-colors hover:border-sky-400/50 hover:text-sky-300">Services</button>
+                    <button type="button" data-ac-prompt="Tell me about Clarke's broadcast expertise." class="shrink-0 rounded-full border border-slate-700 bg-slate-800/70 px-3 py-1.5 text-xs text-slate-300 transition-colors hover:border-sky-400/50 hover:text-sky-300">Broadcast work</button>
+                    <button type="button" data-ac-prompt="How can I contact Clarke?" class="shrink-0 rounded-full border border-slate-700 bg-slate-800/70 px-3 py-1.5 text-xs text-slate-300 transition-colors hover:border-sky-400/50 hover:text-sky-300">Contact</button>
+                </div>
+                <form id="ac-chat-form" class="flex items-end gap-2">
+                    <label class="sr-only" for="ac-chat-input">Message AC</label>
+                    <textarea id="ac-chat-input" rows="1" maxlength="1200" placeholder="Message AC..." class="max-h-28 min-h-[44px] flex-1 resize-none rounded-2xl border border-slate-700 bg-slate-900 px-3 py-3 text-sm text-white placeholder-slate-500 outline-none transition-colors focus:border-sky-400 focus:ring-1 focus:ring-sky-400" required></textarea>
+                    <button id="ac-chat-send" type="submit" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white shadow-lg shadow-sky-500/20 transition-all hover:from-sky-400 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-sky-300" aria-label="Send message">
+                        <i data-lucide="send" class="h-4 w-4"></i>
+                    </button>
+                </form>
+                <p class="mt-2 text-center text-[10px] text-slate-500">AC is an AI assistant and may make mistakes.</p>
+            </div>
+        </section>
+
+        <button id="ac-chat-toggle" type="button" class="group flex h-14 items-center gap-3 rounded-2xl border border-sky-300/25 bg-gradient-to-r from-sky-500 to-indigo-600 px-4 text-white shadow-xl shadow-sky-950/60 transition-all hover:scale-[1.03] hover:shadow-sky-500/30 focus:outline-none focus:ring-2 focus:ring-sky-300 focus:ring-offset-2 focus:ring-offset-slate-950" aria-expanded="false" aria-controls="ac-chat-window">
+            <span class="relative flex h-8 w-8 items-center justify-center rounded-xl bg-white/15 font-outfit text-xs font-extrabold">AC<span class="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-sky-500 bg-emerald-400"></span></span>
+            <span class="pr-1 text-sm font-bold">Ask AC</span>
+            <i data-lucide="message-circle" class="h-5 w-5 transition-transform group-hover:scale-110"></i>
+        </button>
+    </div>
+
+    <!-- Project Details Modal -->
+    <div id="project-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+        <div class="glass-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 border border-slate-700 relative space-y-6 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-6 right-6 p-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="space-y-2">
+                <span id="modal-tag" class="px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/30"></span>
+                <h3 id="modal-title" class="text-2xl font-bold font-outfit text-white pt-2"></h3>
+            </div>
+
+            <p id="modal-desc" class="text-slate-300 text-sm leading-relaxed"></p>
+
+            <div class="space-y-3">
+                <h4 class="text-xs font-bold uppercase text-slate-400 font-mono">Key Highlights & Tech Stack</h4>
+                <ul id="modal-list" class="space-y-2 text-xs text-slate-300"></ul>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 flex justify-end">
+                <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white font-semibold text-xs transition-colors">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Set Dynamic Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Interactive Contact Form Handling
+        const contactForm = document.getElementById('contact-form');
+        const formSuccess = document.getElementById('form-success');
+        const submitBtn = document.getElementById('submit-btn');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Visual feedback
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75');
+            submitBtn.innerHTML = `<span>Sending...</span>`;
+
+            setTimeout(() => {
+                submitBtn.classList.remove('opacity-75');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>Send Message</span><i data-lucide="send" class="w-4 h-4"></i>`;
+                lucide.createIcons();
+
+                // Show Success Message
+                formSuccess.classList.remove('hidden');
+                contactForm.reset();
+
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    formSuccess.classList.add('hidden');
+                }, 5000);
+            }, 1000);
+        });
+
+        // Project Modal Logic
+        const modalData = {
+            actech: {
+                tag: 'Platform & Media Production',
+                title: 'ACTech Platform & Production Solutions',
+                desc: 'ACTech serves as a central technical hub offering modern web development and high-stakes broadcast operations. Built with speed and modularity, the platform features dynamic service request routing and media portfolio showcases.',
+                list: [
+                    'Built with React and Tailwind CSS for instant load times.',
+                    'Integrated vMix live streaming backend workflow setup.',
+                    'Includes live multi-cam switcher config guides and NDI routing protocols.'
+                ]
+            },
+            aquajo: {
+                tag: 'AI & API Integration',
+                title: 'AC (Artificial Clone)',
+                desc: 'An intelligent AI clone assistant built with custom prompt engineering, API architecture, and serverless cloud deployment. It addresses complex conversational workflows, real-time response generation, and automated context handling.',
+                list: [
+                    'Custom system prompt architecture and intelligent response handling.',
+                    'REST API integration for real-time model communication and data streaming.',
+                    'Secure environment variable management and serverless deployment on Vercel.'
+                ]
+            },
+            academic: {
+                tag: 'Desktop & Academic Software',
+                title: 'Java GUI Cashiering & Academic Systems',
+                desc: 'A collection of custom applications developed for academic institutions, including a robust offline desktop cashiering system and an online student clearance workflow concept.',
+                list: [
+                    'Java Swing GUI with reliable offline SQL database integration.',
+                    'Multi-page parallax user interfaces for institutional showcases.',
+                    'Clearance approval routing and student clearance record management.'
+                ]
+            }
+        };
+
+        const modal = document.getElementById('project-modal');
+        const modalTag = document.getElementById('modal-tag');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalList = document.getElementById('modal-list');
+
+        function openModal(key) {
+            const data = modalData[key];
+            if (!data) return;
+
+            modalTag.textContent = data.tag;
+            modalTitle.textContent = data.title;
+            modalDesc.textContent = data.desc;
+
+            modalList.innerHTML = '';
+            data.list.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center gap-2';
+                li.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-sky-400"></i> ${item}`;
+                modalList.appendChild(li);
+            });
+
+            lucide.createIcons();
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        // Close modal on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // AC virtual assistant
+        const acChatWindow = document.getElementById('ac-chat-window');
+        const acChatToggle = document.getElementById('ac-chat-toggle');
+        const acChatClose = document.getElementById('ac-chat-close');
+        const acChatClear = document.getElementById('ac-chat-clear');
+        const acChatMessages = document.getElementById('ac-chat-messages');
+        const acChatForm = document.getElementById('ac-chat-form');
+        const acChatInput = document.getElementById('ac-chat-input');
+        const acChatSend = document.getElementById('ac-chat-send');
+        let acConversation = [];
+
+        function scrollAcChatToBottom() {
+            acChatMessages.scrollTop = acChatMessages.scrollHeight;
+        }
+
+        function addAcMessage(role, text) {
+            const row = document.createElement('div');
+            row.className = role === 'user' ? 'flex items-end justify-end gap-2' : 'flex items-end gap-2';
+
+            if (role === 'assistant') {
+                const avatar = document.createElement('div');
+                avatar.className = 'flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-sky-500/20 text-[10px] font-bold text-sky-300';
+                avatar.textContent = 'AC';
+                row.appendChild(avatar);
+            }
+
+            const bubble = document.createElement('p');
+            bubble.className = role === 'user'
+                ? 'max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-gradient-to-br from-sky-500 to-indigo-600 px-3 py-2.5 text-sm leading-relaxed text-white'
+                : 'max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-bl-md border border-slate-700/70 bg-slate-800/80 px-3 py-2.5 text-sm leading-relaxed text-slate-200';
+            bubble.textContent = text;
+            row.appendChild(bubble);
+            acChatMessages.appendChild(row);
+            scrollAcChatToBottom();
+        }
+
+        function resetAcChat() {
+            if (acChatSend.disabled) return;
+            acConversation = [];
+            acChatMessages.innerHTML = '';
+            addAcMessage('assistant', "Hi! I'm AC, Clarke's virtual assistant. You can ask me about his web development, systems, broadcast work, or how to get in touch.");
+            acChatInput.focus();
+        }
+
+        function setAcChatOpen(isOpen) {
+            acChatWindow.classList.toggle('hidden', !isOpen);
+            acChatToggle.setAttribute('aria-expanded', String(isOpen));
+            if (isOpen) {
+                acChatInput.focus();
+                scrollAcChatToBottom();
+            }
+        }
+
+        function autoResizeAcInput() {
+            acChatInput.style.height = 'auto';
+            acChatInput.style.height = `${Math.min(acChatInput.scrollHeight, 112)}px`;
+        }
+
+        acChatToggle.addEventListener('click', () => {
+            setAcChatOpen(acChatWindow.classList.contains('hidden'));
+        });
+        acChatClose.addEventListener('click', () => setAcChatOpen(false));
+        acChatClear.addEventListener('click', resetAcChat);
+        acChatInput.addEventListener('input', autoResizeAcInput);
+        acChatInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                acChatForm.requestSubmit();
+            }
+        });
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !acChatWindow.classList.contains('hidden')) {
+                setAcChatOpen(false);
+            }
+        });
+
+        document.querySelectorAll('[data-ac-prompt]').forEach((button) => {
+            button.addEventListener('click', () => {
+                acChatInput.value = button.dataset.acPrompt;
+                autoResizeAcInput();
+                acChatForm.requestSubmit();
+            });
+        });
+
+        acChatForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const message = acChatInput.value.trim();
+            if (!message || acChatSend.disabled) return;
+
+            addAcMessage('user', message);
+            acConversation.push({ role: 'user', text: message });
+            acChatInput.value = '';
+            autoResizeAcInput();
+            acChatInput.disabled = true;
+            acChatSend.disabled = true;
+
+            const typingRow = document.createElement('div');
+            typingRow.className = 'flex items-end gap-2';
+            typingRow.innerHTML = '<div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-sky-500/20 text-[10px] font-bold text-sky-300">AC</div><div class="rounded-2xl rounded-bl-md border border-slate-700/70 bg-slate-800/80 px-3 py-3 text-xs text-sky-300"><span class="inline-flex gap-1"><span class="h-1.5 w-1.5 animate-bounce rounded-full bg-sky-400"></span><span class="h-1.5 w-1.5 animate-bounce rounded-full bg-sky-400 [animation-delay:150ms]"></span><span class="h-1.5 w-1.5 animate-bounce rounded-full bg-sky-400 [animation-delay:300ms]"></span></span></div>';
+            acChatMessages.appendChild(typingRow);
+            scrollAcChatToBottom();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: acConversation.slice(-12) })
+                });
+                const data = await response.json().catch(() => ({}));
+                if (!response.ok || !data.reply) {
+                    throw new Error(data.error || 'AC is temporarily unavailable.');
+                }
+                acConversation.push({ role: 'assistant', text: data.reply });
+                addAcMessage('assistant', data.reply);
+            } catch (error) {
+                const fallback = error.message || 'AC is temporarily unavailable. Please try again in a moment.';
+                addAcMessage('assistant', fallback);
+            } finally {
+                typingRow.remove();
+                acChatInput.disabled = false;
+                acChatSend.disabled = false;
+                acChatInput.focus();
+                scrollAcChatToBottom();
+            }
+        });
+    </script>
+</body>
+</html>
